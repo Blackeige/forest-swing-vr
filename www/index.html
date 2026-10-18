@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b1a10">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css">
+<title>Forest Swing VR</title>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<button id="menuBtn" aria-label="Menu">☰</button>
+<div id="start">
+  <div class="card">
+    <h1>Forest Swing VR</h1>
+    <p class="sub">Déplacement physique aux mains, pour Android + Google Cardboard.<br>Mets le téléphone en paysage ; la caméra arrière suit tes mains.</p>
+    <div class="row">
+      <button id="btnPlay" class="primary">Jouer (caméra + Cardboard)</button>
+      <button id="btnFallback">Mode secours (sans caméra)</button>
+    </div>
+    <details>
+      <summary>Options</summary>
+      <label>Caméra <select id="selFacing"><option value="environment">Arrière</option><option value="user">Avant</option></select></label>
+      <label><input type="checkbox" id="chkMono"> Écran simple (test hors casque)</label>
+      <label>Multijoueur (ws://hôte:port/ws, ou « local ») <input id="inpNet" placeholder="vide = solo"></label>
+      <label>Salle <input id="inpRoom" value="foret"></label>
+      <label>Pseudo <input id="inpName" placeholder="Singe"></label>
+    </details>
+    <p id="msg" class="msg"></p>
+    <p class="hint">Touches (test PC) : W avancer · Espace sauter · flèches tête · R recentrer · M menu · C recalibrer · G diagnostic</p>
+  </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

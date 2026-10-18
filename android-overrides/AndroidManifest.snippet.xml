@@ -1,0 +1,9 @@
+<!-- Éléments appliqués par scripts/patch-android.mjs au AndroidManifest.xml généré par Capacitor. -->
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+<uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+<uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+<!-- Sur <activity android:name=".MainActivity"> : android:screenOrientation="sensorLandscape" (paysage, les deux sens) -->

@@ -1,0 +1,7 @@
+{
+  "appId": "app.forestswing.vr",
+  "appName": "Forest Swing VR",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false, "backgroundColor": "#000000" }
+}

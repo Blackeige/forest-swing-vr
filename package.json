@@ -1,0 +1,19 @@
+{
+  "name": "forest-swing-vr",
+  "version": "1.0.0",
+  "description": "Jeu VR de locomotion aux mains pour Android + Google Cardboard (Capacitor)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "test": "node tests/run-all.mjs",
+    "android:add": "cap add android && node scripts/patch-android.mjs",
+    "android:sync": "node scripts/patch-android.mjs && cap sync android",
+    "android:build": "bash scripts/build-apk.sh"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}
