@@ -1,20 +1,56 @@
-# Compilation en ligne gratuite via GitHub Actions : pousse le dossier sur un dépôt GitHub, l'APK apparaît dans « Artifacts ».
+
 name: Build APK
-on: { workflow_dispatch: {}, push: { branches: [main] } }
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
 jobs:
   apk:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - uses: actions/setup-java@v4
-        with: { distribution: temurin, java-version: 17 }
-      - uses: android-actions/setup-android@v3
-      - run: npm install
-      - run: npx cap add android
-      - run: node scripts/patch-android.mjs
-      - run: npx cap sync android
-      - run: cd android && ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v4
-        with: { name: ForestSwingVR-debug-apk, path: android/app/build/outputs/apk/debug/app-debug.apk }
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          yes | sdkmanager --licenses
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create Android project
+        run: npx cap add android
+
+      - name: Patch Android project
+        run: node scripts/patch-android.mjs
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build APK
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ForestSwingVR-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
