@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,15 +28,20 @@ jobs:
           java-version: 17
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK packages
-        run: |
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
-          yes | sdkmanager --licenses
+        uses: android-actions/setup-android@v4
+        with:
+          packages: |
+            platform-tools
+            cmdline-tools;latest
+            platforms;android-35
+            build-tools;35.0.0
+          accept-android-sdk-licenses: true
 
       - name: Install dependencies
         run: npm install
+
+      - name: Run project tests
+        run: npm test
 
       - name: Create Android project
         run: npx cap add android
@@ -46,7 +52,7 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
-      - name: Build APK
+      - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
 
       - name: Upload APK
@@ -54,3 +60,5 @@ jobs:
         with:
           name: ForestSwingVR-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
